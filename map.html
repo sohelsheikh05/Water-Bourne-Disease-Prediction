@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_ea9487c9cc489aa6725e61cd21767fb3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_ea9487c9cc489aa6725e61cd21767fb3" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_ea9487c9cc489aa6725e61cd21767fb3 = L.map(
+                "map_ea9487c9cc489aa6725e61cd21767fb3",
+                {
+                    center: [25.5, 92.5],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 6,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_e608ad444842c4af2c2a54d772e19f2a = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_e608ad444842c4af2c2a54d772e19f2a.addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+            var circle_marker_77fd1e0fb405969fb4ea56fd5831f0df = L.circleMarker(
+                [24.38, 93.46],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+        var popup_d7cff3a622a262bc62bfac58b86b6540 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cc6725039ca0c0659b732f5511803bb4 = $(`<div id="html_cc6725039ca0c0659b732f5511803bb4" style="width: 100.0%; height: 100.0%;">Bishnupur: 3.67 cases</div>`)[0];
+                popup_d7cff3a622a262bc62bfac58b86b6540.setContent(html_cc6725039ca0c0659b732f5511803bb4);
+            
+        
+
+        circle_marker_77fd1e0fb405969fb4ea56fd5831f0df.bindPopup(popup_d7cff3a622a262bc62bfac58b86b6540)
+        ;
+
+        
+    
+    
+            var circle_marker_f53d360d2a3423485aab5184d954d328 = L.circleMarker(
+                [24.2, 93.41],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+        var popup_d599ab9dcd5b4086603f30e7657da199 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d915e6f38cae43df906ff611e5ebe281 = $(`<div id="html_d915e6f38cae43df906ff611e5ebe281" style="width: 100.0%; height: 100.0%;">Churachandpur: 4.00 cases</div>`)[0];
+                popup_d599ab9dcd5b4086603f30e7657da199.setContent(html_d915e6f38cae43df906ff611e5ebe281);
+            
+        
+
+        circle_marker_f53d360d2a3423485aab5184d954d328.bindPopup(popup_d599ab9dcd5b4086603f30e7657da199)
+        ;
+
+        
+    
+    
+            var circle_marker_fd08b999854c940f27cc148d413a8013 = L.circleMarker(
+                [25.3947, 92.2622],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+        var popup_b441f9099b453d7570b03b4a7f3ca849 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_580c121371ab260236802b03271c3468 = $(`<div id="html_580c121371ab260236802b03271c3468" style="width: 100.0%; height: 100.0%;">East Jaintia Hills: 11.33 cases</div>`)[0];
+                popup_b441f9099b453d7570b03b4a7f3ca849.setContent(html_580c121371ab260236802b03271c3468);
+            
+        
+
+        circle_marker_fd08b999854c940f27cc148d413a8013.bindPopup(popup_b441f9099b453d7570b03b4a7f3ca849)
+        ;
+
+        
+    
+    
+            var circle_marker_f01072015e23878ac73ace47b4012443 = L.circleMarker(
+                [25.5788, 91.8933],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+        var popup_9ca6563d2eb8f02d29c229b5b021cb06 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_00092a4d40a0c00fb5b5a5cb28e96aff = $(`<div id="html_00092a4d40a0c00fb5b5a5cb28e96aff" style="width: 100.0%; height: 100.0%;">East Khasi Hills: 5.33 cases</div>`)[0];
+                popup_9ca6563d2eb8f02d29c229b5b021cb06.setContent(html_00092a4d40a0c00fb5b5a5cb28e96aff);
+            
+        
+
+        circle_marker_f01072015e23878ac73ace47b4012443.bindPopup(popup_9ca6563d2eb8f02d29c229b5b021cb06)
+        ;
+
+        
+    
+    
+            var circle_marker_e6fdb74945e30269fe0128cd8be7c2f4 = L.circleMarker(
+                [24.5, 94.06],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+        var popup_1b3dfe4059ba1e31fd40cd58491ef3eb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_60f17c090b16c84ea07618c61424a0b1 = $(`<div id="html_60f17c090b16c84ea07618c61424a0b1" style="width: 100.0%; height: 100.0%;">Imphal East: 3.33 cases</div>`)[0];
+                popup_1b3dfe4059ba1e31fd40cd58491ef3eb.setContent(html_60f17c090b16c84ea07618c61424a0b1);
+            
+        
+
+        circle_marker_e6fdb74945e30269fe0128cd8be7c2f4.bindPopup(popup_1b3dfe4059ba1e31fd40cd58491ef3eb)
+        ;
+
+        
+    
+    
+            var circle_marker_2189c3882209add475d259feaa0d17ba = L.circleMarker(
+                [24.49, 93.57],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+        var popup_6cb6e3aedb36133e5c2de5cc6d1e74ec = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_44690bad3a0d4894204b3d99a2b005b2 = $(`<div id="html_44690bad3a0d4894204b3d99a2b005b2" style="width: 100.0%; height: 100.0%;">Imphal West: 4.00 cases</div>`)[0];
+                popup_6cb6e3aedb36133e5c2de5cc6d1e74ec.setContent(html_44690bad3a0d4894204b3d99a2b005b2);
+            
+        
+
+        circle_marker_2189c3882209add475d259feaa0d17ba.bindPopup(popup_6cb6e3aedb36133e5c2de5cc6d1e74ec)
+        ;
+
+        
+    
+    
+            var circle_marker_45b3e410553394fc2579b68c6367ab63 = L.circleMarker(
+                [24.3, 93.59],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+        var popup_8d127d362b7291d174c291d9bacc3806 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ce47f6cf6f291b3f4959d8dd1cfa0fc8 = $(`<div id="html_ce47f6cf6f291b3f4959d8dd1cfa0fc8" style="width: 100.0%; height: 100.0%;">Kakching: 4.00 cases</div>`)[0];
+                popup_8d127d362b7291d174c291d9bacc3806.setContent(html_ce47f6cf6f291b3f4959d8dd1cfa0fc8);
+            
+        
+
+        circle_marker_45b3e410553394fc2579b68c6367ab63.bindPopup(popup_8d127d362b7291d174c291d9bacc3806)
+        ;
+
+        
+    
+    
+            var circle_marker_cd8343f96307ee943fbc6b84ec40fcf2 = L.circleMarker(
+                [25.9304, 92.0789],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+        var popup_c7980ec9fdb1d085aa4ce56568358aca = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1334cf0b9c6567adf9d428cdd6a78357 = $(`<div id="html_1334cf0b9c6567adf9d428cdd6a78357" style="width: 100.0%; height: 100.0%;">Ri Bhoi: 6.33 cases</div>`)[0];
+                popup_c7980ec9fdb1d085aa4ce56568358aca.setContent(html_1334cf0b9c6567adf9d428cdd6a78357);
+            
+        
+
+        circle_marker_cd8343f96307ee943fbc6b84ec40fcf2.bindPopup(popup_c7980ec9fdb1d085aa4ce56568358aca)
+        ;
+
+        
+    
+    
+            var circle_marker_cd4323b08cb62f74f1f2684399174dfa = L.circleMarker(
+                [25.3047, 90.9789],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+        var popup_39ba5029252076b136fcfa341ecf9411 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b47e1dfb72885f12373c41b1e0f55d6c = $(`<div id="html_b47e1dfb72885f12373c41b1e0f55d6c" style="width: 100.0%; height: 100.0%;">South West Khasi Hills: 4.00 cases</div>`)[0];
+                popup_39ba5029252076b136fcfa341ecf9411.setContent(html_b47e1dfb72885f12373c41b1e0f55d6c);
+            
+        
+
+        circle_marker_cd4323b08cb62f74f1f2684399174dfa.bindPopup(popup_39ba5029252076b136fcfa341ecf9411)
+        ;
+
+        
+    
+    
+            var circle_marker_166d862659746e31e5f6f5599a806225 = L.circleMarker(
+                [24.4, 93.59],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+        var popup_8fb965c852bfdaa2938852b9eb7e2765 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_92071a734576904119a94ea728c1d981 = $(`<div id="html_92071a734576904119a94ea728c1d981" style="width: 100.0%; height: 100.0%;">Thoubal: 3.67 cases</div>`)[0];
+                popup_8fb965c852bfdaa2938852b9eb7e2765.setContent(html_92071a734576904119a94ea728c1d981);
+            
+        
+
+        circle_marker_166d862659746e31e5f6f5599a806225.bindPopup(popup_8fb965c852bfdaa2938852b9eb7e2765)
+        ;
+
+        
+    
+    
+            var circle_marker_d61e4cace0c447b57431206bf1a8c5d2 = L.circleMarker(
+                [25.4525, 92.2053],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_ea9487c9cc489aa6725e61cd21767fb3);
+        
+    
+        var popup_2c9e9421c19450d8a47e3809f49dd5b2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f1c49597feb11acac363567a7465e114 = $(`<div id="html_f1c49597feb11acac363567a7465e114" style="width: 100.0%; height: 100.0%;">West Jaintia Hills: 11.33 cases</div>`)[0];
+                popup_2c9e9421c19450d8a47e3809f49dd5b2.setContent(html_f1c49597feb11acac363567a7465e114);
+            
+        
+
+        circle_marker_d61e4cace0c447b57431206bf1a8c5d2.bindPopup(popup_2c9e9421c19450d8a47e3809f49dd5b2)
+        ;
+
+        
+    
+</script>
+</html>
