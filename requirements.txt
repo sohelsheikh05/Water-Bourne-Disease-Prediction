@@ -7,3 +7,5 @@ folium
 joblib
 streamlit_folium
 branca
+uvicorn
+fastapi
