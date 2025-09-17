@@ -7,6 +7,18 @@ from typing import Optional
 
 app = FastAPI(title="District Disease Forecast API")
 
+origins = [
+    "http://localhost:3000",
+    "https://your-frontend-domain.com",  # when you deploy frontend
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,       # or ["*"] to allow all
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Load district coordinates
 district_coords = {
     "West Jaintia Hills": [25.5463, 91.7300],

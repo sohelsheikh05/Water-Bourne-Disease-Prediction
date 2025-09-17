@@ -1,3 +1,4 @@
-gunicorn -k uvicorn.workers.UvicornWorker app.rest:app --bind 0.0.0.0:8000
+gweb: gunicorn -k uvicorn.workers.UvicornWorker rest:app --bind 0.0.0.0:8000
+
 
 
