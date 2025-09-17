@@ -4,7 +4,7 @@ import pandas as pd
 import statsmodels.api as sm
 import joblib
 from typing import Optional
-
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(title="District Disease Forecast API")
 
 origins = [
