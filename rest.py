@@ -4,14 +4,17 @@ import pandas as pd
 import statsmodels.api as sm
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
-
+from fastapi import Query
+from datetime import datetime
 app = FastAPI(title="District Disease Forecast API")
 
 # ✅ CORS: allow frontend + API domain
 origins = [
     "http://localhost:3000",  # local dev
     "https://water-bourne-disease-prediction-3.onrender.com",  # your backend domain
-    "https://your-frontend-domain.com",  # when you deploy frontend
+    "https://your-frontend-domain.com", 
+    "http://127.0.0.0:3000"
+      # when you deploy frontend
 ]
 
 app.add_middleware(
@@ -99,6 +102,249 @@ def predict_cases(data: InputData):
 
     except Exception as e:
         return {"error": str(e)}
+class StateInputData(BaseModel):
+    state: str
+    target: str        # e.g. "diarrhea_cases"
+    date: str          # prediction date (YYYY-MM-DD)
+
+
+# Suppose we map which districts belong to which state
+state_districts = {
+    "Meghalaya": ["West Jaintia Hills","East Jaintia Hills","Imphal West","Bishnupur","Imphal East","Thoubal","Kakching","Churachandpur"],
+    "Manipur": ["East Khasi Hills","Ri Bhoi","South West Khasi Hills"]
+}
+NORTHEAST_COORDINATES = {
+    "Meghalaya": {
+        "West Jaintia Hills": {"lat": 25.5463, "lng": 91.7300},
+        "East Jaintia Hills": {"lat": 25.6301, "lng": 92.8251},
+        "Imphal West": {"lat": 24.8170, "lng": 93.9368},
+        "Bishnupur": {"lat": 24.6032, "lng": 93.9494},
+        "Imphal East": {"lat": 24.8057, "lng": 94.0464},
+        "Thoubal": {"lat": 24.6137, "lng": 93.9241},
+        "Kakching": {"lat": 24.5185, "lng": 93.9886},
+        "Churachandpur": {"lat": 24.3306, "lng": 93.6719},
+        "East Khasi Hills": {"lat": 25.5788, "lng": 91.8933},
+        "Ri Bhoi": {"lat": 25.6716, "lng": 91.8261},
+        "South West Khasi Hills": {"lat": 25.3143, "lng": 91.5631}
+    },
+    "Manipur": {
+        "East Khasi Hills": {"lat": 25.5788, "lng": 91.8933},
+        "Ri Bhoi": {"lat": 25.6716, "lng": 91.8261},
+        "South West Khasi Hills": {"lat": 25.3143, "lng": 91.5631}
+    }
+}
+
+# Request body model
+class StateDiseaseRequest(BaseModel):
+    state: str
+    disease: str
+
+# Endpoint
+
+
+
+
+# Request body schema
+class StateDiseaseRequest(BaseModel):
+    state: str
+    disease: str
+
+# State → districts mapping
+state_districts = {
+    "Meghalaya": ["West Jaintia Hills","East Jaintia Hills","Imphal West","Bishnupur","Imphal East","Thoubal","Kakching","Churachandpur"],
+    "Manipur": ["East Khasi Hills","Ri Bhoi","South West Khasi Hills"]
+}
+
+# District coordinates
+NORTHEAST_COORDINATES = {
+    "West Jaintia Hills": {"lat": 25.5463, "lng": 91.7300},
+    "East Jaintia Hills": {"lat": 25.6301, "lng": 92.8251},
+    "Imphal West": {"lat": 24.8170, "lng": 93.9368},
+    "Bishnupur": {"lat": 24.6032, "lng": 93.9494},
+    "Imphal East": {"lat": 24.8057, "lng": 94.0464},
+    "Thoubal": {"lat": 24.6137, "lng": 93.9241},
+    "Kakching": {"lat": 24.5185, "lng": 93.9886},
+    "Churachandpur": {"lat": 24.3306, "lng": 93.6719},
+    "East Khasi Hills": {"lat": 25.5788, "lng": 91.8933},
+    "Ri Bhoi": {"lat": 25.6716, "lng": 91.8261},
+    "South West Khasi Hills": {"lat": 25.3143, "lng": 91.5631}
+}
+
+@app.post("/state_district_cases")
+def get_forecast_table(req: StateDiseaseRequest):
+    try:
+        state = req.state
+        disease = req.disease
+
+        if state not in state_districts:
+            return {"error": f"State '{state}' not found."}
+        print("state_districts[state]",state_districts[state])
+        # Load forecast.csv
+        df = pd.read_csv("forecast_results.csv")
+        api_call_date = "2023-12-06"
+        # Filter districts for this state
+        df_state = df[
+            df["district"].isin(state_districts[state]) &(df["target"] == disease) ]
+
+        df_state = df_state.groupby(["district", "target"], as_index=False).agg({
+            "mean": "sum",             # sum of cases if needed
+            "mean_se": "mean",         # average standard error
+            "mean_ci_lower": "min",    # take min lower bound
+            "mean_ci_upper": "max"     # take max upper bound
+        })
+
+        # Current API call date
+        
+        print(df_state)
+        result = []
+        for _, row in df_state.iterrows():
+            coords = NORTHEAST_COORDINATES.get(row["district"], {"lat": 26.2006, "lng": 92.9376})
+            result.append({
+                "date":api_call_date ,
+                "cases": row["mean"],
+                "district": row["district"],
+                "target": row["target"],
+                "lat": coords["lat"],
+                "lng": coords["lng"],
+               
+            })
+
+        return {"state": state, "disease": disease, "forecast": result}
+
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.post("/predict_state")
+def predict_state(data: StateInputData):
+    print(data)
+    if data.state not in state_districts:
+        return {"error": f"State '{data.state}' is not supported."}
+
+    try:
+        prediction_date = datetime.strptime(data.date, "%Y-%m-%d")
+        all_predictions = []
+        districts=[]
+
+        for district in state_districts[data.state]:
+            try:
+               
+                ts = prepare_ts(district)
+                if data.target not in ts.columns:
+                    continue  # skip district if target column not present
+
+                model = train_sarimax(ts, target_col=data.target)
+                last_date = ts.index[-1]
+               
+                steps_needed = (prediction_date - last_date).days
+
+                if steps_needed <= 0:
+                    # Requested date is not in the future
+
+                    all_predictions.append({
+                        "district": district,
+                        "error": f"Requested date {data.date} is not after last available data {last_date.date()}"
+                    })
+                    continue
+                
+                forecast_df = forecast(model, last_date, steps=steps_needed)
+                if forecast_df.empty or steps_needed > len(forecast_df):
+                    all_predictions.append({
+                        "district": district,
+                        "error": "Forecast not available for the requested date"
+                    })
+                    continue
+                forecast_df.to_csv("forecast_results1.csv", index=True)
+                row = forecast_df.iloc[steps_needed - 1]
+                  # pick that date
+                districts.append({
+                    "district":district,
+                    "coords": NORTHEAST_COORDINATES[district],
+                    "mean": row["mean"],
+                })
+                all_predictions.append({
+                    "district": district,
+                    "target": data.target,
+                    "date": row["date"].strftime("%Y-%m-%d"),
+                    "cases": float(row["mean"]),
+                    "mean_ci_lower": float(row["mean_ci_lower"]),
+                    "mean_ci_upper": float(row["mean_ci_upper"]),
+                    "coords": NORTHEAST_COORDINATES[district],
+                })
+
+            except Exception as e:
+                all_predictions.append({"district": district, "error": str(e)})
+
+        return {
+            "state": data.state,
+            "target": data.target,
+            "date": data.date,
+            "districts": districts,
+            "predictions": all_predictions
+        }
+
+    except Exception as e:
+        return {"error": str(e)}
+@app.get("/diseases")
+def get_disease_names():
+    try:
+        # Load dataset
+        df = pd.read_csv("forecast_results.csv")
+        
+        # Drop known non-disease columns
+        print(df.columns)
+        disease_cols = df["target"]
+        
+        # Ensure uniqueness
+        unique_diseases = sorted(set(disease_cols))
+        
+        return {"diseases": unique_diseases}
+    except Exception as e:
+        return {"error": str(e)}
+    
+@app.get("/states")
+def get_disease_names():
+    try:
+        # Load dataset
+        df = pd.read_csv("forecast_results.csv")
+        
+        # Drop known non-disease columns
+        print(df.columns)
+        disease_cols = df["target"]
+        
+        # Ensure uniqueness
+        unique_diseases = sorted(set(disease_cols))
+        
+        return {"diseases": unique_diseases}
+    except Exception as e:
+        return {"error": str(e)}
+
+# Load forecast data
+# Make sure your CSV has columns: date, mean, district, target
+
+
+@app.post("/total_cases_by_state")
+def total_cases_by_state(data):
+    try:
+        if data.state not in state_districts:
+            return {"error": f"State '{data.state}' not found."}
+        forecast_df = pd.read_csv("forecast_results1.csv")
+        print(forecast_df.columns)
+        
+        df_state = forecast_df[
+            forecast_df["district"].isin(state_districts[data.state]) &
+            (forecast_df["target"] == data.disease) & (forecast_df["date"] == data.date)
+        ]
+
+        total_cases = df_state["mean"].sum()
+
+        return {
+            "state": data.state,
+            "disease": data.disease,    
+            "total_cases": total_cases
+        }
+    except Exception as e:
+        return {"error": str(e)}    
 
 if __name__ == "__main__":
     import uvicorn
