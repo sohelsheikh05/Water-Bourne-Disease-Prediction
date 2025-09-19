@@ -115,7 +115,7 @@ def predict_cases(data: InputData):
         model = train_sarimax(ts, target_col=data.target)
         last_date = ts.index[-1]
         forecast_df = forecast(model, last_date, steps=data.steps)
-
+        forecast_df.to_csv("forecast_results.csv", index=False)
         response = []
         for i in range(data.steps):
             response.append({
@@ -203,7 +203,7 @@ def predict_state(data: StateInputData):
 
                 forecast_df = forecast(model, last_date, steps=steps_needed)
                 row = forecast_df.iloc[steps_needed - 1]
-
+                forecast_df.to_csv("forecast_results.csv", index=False)
                 districts.append({
                     "district": district,
                     "coords": district_coords[district],
