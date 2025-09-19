@@ -236,38 +236,43 @@ def predict_state(data: StateInputData):
 @app.get("/diseases")
 def get_disease_names():
     try:
-        df = pd.read_csv("forecast_results.csv")
-        unique_diseases = sorted(set(df["target"]))
+        # Recompute forecast for all districts
+        all_forecasts = []
+
+        for district in district_coords.keys():
+            try:
+                ts = prepare_ts(district)
+                # Forecast all columns except 'year', 'month', 'district'
+                disease_cols = [col for col in ts.columns if col not in ["year","month","district"]]
+                if not disease_cols:
+                    continue
+
+                for target in disease_cols:
+                    model = train_sarimax(ts, target_col=target)
+                    last_date = ts.index[-1]
+                    forecast_df = forecast(model, last_date, steps=30)  # default 30-day forecast
+                    forecast_df['district'] = district
+                    forecast_df['target'] = target
+                    all_forecasts.append(forecast_df)
+
+            except Exception as e:
+                print(f"Skipping district {district} due to error: {e}")
+
+        if not all_forecasts:
+            return {"error": "No forecast data available"}
+
+        # Combine all forecasts
+        combined_df = pd.concat(all_forecasts, ignore_index=True)
+        combined_df.to_csv("forecast_results.csv", index=False)
+        
+        # Get unique disease names
+        unique_diseases = sorted(combined_df["target"].unique())
+        # unique_diseases=all_forecasts
         return {"diseases": unique_diseases}
+
     except Exception as e:
         return {"error": str(e)}
 
-@app.get("/states")
-def get_states():
-    return {"states": list(state_districts.keys())}
-
-@app.post("/total_cases_by_state")
-def total_cases_by_state(data: TotalCasesRequest):
-    try:
-        if data.state not in state_districts:
-            return {"error": f"State '{data.state}' not found."}
-        forecast_df = pd.read_csv("forecast_results1.csv")
-
-        df_state = forecast_df[
-            forecast_df["district"].isin(state_districts[data.state]) &
-            (forecast_df["target"] == data.disease) &
-            (forecast_df["date"] == data.date)
-        ]
-
-        total_cases = df_state["mean"].sum()
-
-        return {
-            "state": data.state,
-            "disease": data.disease,
-            "total_cases": total_cases
-        }
-    except Exception as e:
-        return {"error": str(e)}
 
 # -----------------------------
 # Run server (Render requires PORT)
