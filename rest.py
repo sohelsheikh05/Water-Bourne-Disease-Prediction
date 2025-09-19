@@ -13,7 +13,8 @@ origins = [
     "http://localhost:3000",  # local dev
     "https://water-bourne-disease-prediction-3.onrender.com",  # your backend domain
     "https://your-frontend-domain.com", 
-    "http://127.0.0.0:3000"
+    "http://127.0.0.0:3000",
+    "https://sih-25001-dashboard.vercel.app"
       # when you deploy frontend
 ]
 
